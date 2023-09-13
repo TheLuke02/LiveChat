@@ -6,7 +6,7 @@ const Button = ( {title, containerStyles, btnType, textStyles, handleClick}: But
     <button
       disabled={false}
       type={btnType || 'button'}
-      className={`btn ${containerStyles}`}
+      className={`${containerStyles}`}
       onClick={handleClick}
     > 
       <span className={`flex-1 ${textStyles}`}>
