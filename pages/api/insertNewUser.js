@@ -17,11 +17,9 @@ export default async (req, res) => {
             });
         
         
-        res.json(JSON.parse(req.body));
+        res.json(newUser);
     } catch (error) {
         console.error(e);
         throw new Error(e).message;
     }
 }
-
-// BOH, mi devo ancora documentare

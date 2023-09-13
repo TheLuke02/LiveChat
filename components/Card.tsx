@@ -10,24 +10,60 @@ import { FormEvent } from 'react'
 const Card = ({ title, goTo }: CardProps) => {
     var sha1: any = require('sha1');
 
-    async function onsubmitHandler(event: FormEvent<HTMLFormElement>) {
-        let hash: any = sha1(event.target.password.value)
-        const formData = JSON.stringify({
-                            name: event.target.name.value,
-                            password: hash
-                        })
+    async function onsubmitRegistrationHandler(event: FormEvent<HTMLFormElement>) {
+        try {
+            let hash: any = sha1(event.target.password.value)
+            const formData = JSON.stringify({
+                name: event.target.name.value,
+                password: hash
+            })
 
-        const response = await fetch(goTo, {
-            method: 'POST',
-            body: formData,
-        })
+            const response = await fetch(goTo, {
+                method: 'POST',
+                body: formData,
+            })
 
-        const data = await response.json()
+            const data = await response.json()
+            if(JSON.stringify(data.acknowledged))
+                window.location.replace("../newRegistration");
+            else
+                throw new Error("Errore nel login")
+        } catch (e: any) {
+            console.error(e);
+            throw new Error(e).message;
+        }
+    }
+
+    async function onsubmitLoginHandler(event: FormEvent<HTMLFormElement>) {
+        try {
+            let hash: any = sha1(event.target.password.value)
+            const formData = JSON.stringify({
+                name: event.target.name.value,
+                password: hash
+            })
+
+            const response = await fetch(goTo, {
+                method: 'POST',
+                body: formData,
+            })
+            const data = await response.json()
+            alert(data)
+        } catch (e: any) {
+            console.error(e);
+            throw new Error(e).message;
+        }
     }
 
     return (
         <div className='h-auto w-auto px-3 py-3 shadow-lg shadow-black rounded-xl bg-slate-800'>
-            <form method="POST" onSubmit={onsubmitHandler} className=''>
+            <form 
+                method="POST" 
+                onSubmit={
+                    title == "Registrati"
+                    ? onsubmitRegistrationHandler
+                    : onsubmitLoginHandler
+                } 
+            >
                 <div className='flex flex-raw gap-2 justify-center'>
                     <h1 className='font-bold text-white'>{title}</h1>
                     {

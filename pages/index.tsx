@@ -39,7 +39,7 @@ export default function Home(props: Props) {
         />
         <Card
           title='Accedi'
-          goTo=''
+          goTo='/api/login'
         />
       </div>
 
