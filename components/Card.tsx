@@ -1,68 +1,82 @@
-import Image from 'next/image'
 import { Button } from '.'
 import { UserPlusIcon, ArrowRightCircleIcon } from '@heroicons/react/24/outline'
-import { CardProps } from '@/types'
-import { useState } from 'react'
+import { CardProps, Result } from '@/types'
 import { FormEvent } from 'react'
+import { useState } from 'react'
 
 
 
 const Card = ({ title, goTo }: CardProps) => {
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
     var sha1: any = require('sha1');
 
-    async function onsubmitRegistrationHandler(event: FormEvent<HTMLFormElement>) {
-        try {
-            let hash: any = sha1(event.target.password.value)
-            const formData = JSON.stringify({
-                name: event.target.name.value,
-                password: hash
-            })
+    const handleSubmitLogin = async(e: any) => {
+        e.preventDefault();
 
-            const response = await fetch(goTo, {
-                method: 'POST',
-                body: formData,
-            })
+        if(name && password) {
+            let hash: any = sha1(password)
+            try {
+                let response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        name: name,
+                        password: hash
+                    }),
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data: Result = await response.json();
+                setName('');
+                setPassword('');
+                
+                if(data.trovato) {
+                    window.location.replace("./chats")
+                } else {
+                    alert(JSON.stringify(data))
+                }
 
-            const data = await response.json()
-
-            if(data)
-                window.location.replace("../newRegistration");
-            else
-                alert("Errore, l'username inserito esiste già")
-                throw new Error("Errore nella registrazione")
-
-        } catch (e: any) {
-            console.error(e);
-            throw new Error(e).message;
+            } catch (errorMessage: any) {
+                console.error(errorMessage);
+            }
         }
     }
 
-    async function onsubmitLoginHandler(event: FormEvent<HTMLFormElement>) {
-        try {
-            let hash: any = sha1(event.target.password.value)
-            const formData = JSON.stringify({
-                name: event.target.name.value,
-                password: hash
-            })
+    const handleSubmitRegistration = async (e: any) => {
+        e.preventDefault();
 
-            const response = await fetch(goTo, {
-                method: 'POST',
-                body: formData,
-            })
+        if (name && password) {
+            let hash: any = sha1(password)
+            try {
+                let response = await fetch('http://localhost:3000/api/insertNewUser', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        name: name,
+                        password: hash
+                    }),
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data: Result = await response.json();
+                setName('');
+                setPassword('');
 
-            const data = await response.json()
+                if(data.acknowledged) {
+                    window.location.replace("./newRegistration");
+                } else {
+                    alert(JSON.stringify(data))
+                }
+                
 
-            if(data) {
-                window.location.replace("../chats");
+            } catch (errorMessage: any) {
+                console.error(errorMessage);
             }
-            else {
-                throw new Error("Errore nel login")
-            }
-            
-        } catch (e: any) {
-            alert("Credenziali non valide")
-            console.error(e);
-            throw new Error(e).message;
+        } else {
+            return alert('Sono richiesti tutti i campi')
         }
     }
 
@@ -72,10 +86,11 @@ const Card = ({ title, goTo }: CardProps) => {
                 method="POST" 
                 onSubmit={
                     title == "Registrati"
-                    ? onsubmitRegistrationHandler
-                    : onsubmitLoginHandler
+                    ? handleSubmitRegistration
+                    : handleSubmitLogin
                 } 
             >
+                
                 <div className='flex flex-raw gap-2 justify-center'>
                     <h1 className='font-bold text-white'>{title}</h1>
                     {
@@ -86,8 +101,8 @@ const Card = ({ title, goTo }: CardProps) => {
                 </div>
 
                 <div className='flex flex-col gap-2 py-2'>
-                    <input className='input' type="text" placeholder="Username" id="name" name='name' required />
-                    <input className='input' type="password" placeholder="Password" id="password" name='password' required />
+                    <input className='input' type="text" placeholder="Username" onChange={e => setName(e.target.value)} value={name} required />
+                    <input className='input' type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} value={password} required />
                 </div>
 
                 <div className='py-2 flex justify-center'>
@@ -95,6 +110,7 @@ const Card = ({ title, goTo }: CardProps) => {
                 </div>
 
             </form>
+
         </div>
     )
 }

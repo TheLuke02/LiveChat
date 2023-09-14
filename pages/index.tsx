@@ -35,11 +35,11 @@ export default function Home(props: Props) {
       <div className='flex flex-row flex-wrap flex-auto justify-center gap-14'>
         <Card
           title='Registrati'
-          goTo='/api/insertNewUser'
+          goTo='./api/insertNewUser'
         />
         <Card
           title='Accedi'
-          goTo='/api/login'
+          goTo='./api/login'
         />
       </div>
 

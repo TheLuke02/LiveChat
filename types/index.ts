@@ -21,6 +21,14 @@ export interface User {
     password?: string;
 }
 
+export interface Result {
+    acknowledged?: boolean;
+    insertedId?: string;
+    erroreCredenziali?: string;
+    erroreUtente?: string;
+    trovato?: boolean;
+}
+
 export interface Props {
     users: [User];
 }
