@@ -24,10 +24,13 @@ const Card = ({ title, goTo }: CardProps) => {
             })
 
             const data = await response.json()
-            if(JSON.stringify(data.acknowledged))
+
+            if(data)
                 window.location.replace("../newRegistration");
             else
-                throw new Error("Errore nel login")
+                alert("Errore, l'username inserito esiste già")
+                throw new Error("Errore nella registrazione")
+
         } catch (e: any) {
             console.error(e);
             throw new Error(e).message;
@@ -46,9 +49,18 @@ const Card = ({ title, goTo }: CardProps) => {
                 method: 'POST',
                 body: formData,
             })
+
             const data = await response.json()
-            alert(data)
+
+            if(data) {
+                window.location.replace("../chats");
+            }
+            else {
+                throw new Error("Errore nel login")
+            }
+            
         } catch (e: any) {
+            alert("Credenziali non valide")
             console.error(e);
             throw new Error(e).message;
         }

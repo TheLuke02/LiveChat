@@ -1,6 +1,9 @@
 import clientPromise from "../../lib/mongodb"; // Per potersi connettere al DB
+import { withSessionRoute } from "pages/lib/config/withSession"; // Per creare la sessione
 
-export default async (req, res) => {
+export default withSessionRoute(createSessionRoute);
+
+async function createSessionRoute(req, res) {
    try {
        const client = await clientPromise; // Aspetto una risposta sullo stato della connessione con il server
        const db = client.db("LiveChat"); // Mi connetto al DB
@@ -11,9 +14,15 @@ export default async (req, res) => {
             .findOne({name: name}) // prendo un solo documento dentro la Collezione User
         
         if(search == null || search.password != password)
-            res.json(false);
-        else
+            res.json(false)
+        else {
+            req.session.user = { // Creo la sessione
+                username: name,
+                session: true
+            }
+            await req.session.save() // Salvo la sessione
             res.json(true)
+        }
    } catch (e) {
        console.error(e);
    }

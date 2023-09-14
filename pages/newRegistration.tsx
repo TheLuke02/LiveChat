@@ -1,6 +1,9 @@
 import React from 'react'
 
 const newRegistration = () => {
+
+  
+
   return (
     <div>
         Registrazione avvenuta con successo
