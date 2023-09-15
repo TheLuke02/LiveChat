@@ -1,12 +1,9 @@
 import { Button } from '.'
 import { UserPlusIcon, ArrowRightCircleIcon } from '@heroicons/react/24/outline'
 import { CardProps, Result } from '@/types'
-import { FormEvent } from 'react'
 import { useState } from 'react'
 
-
-
-const Card = ({ title, goTo }: CardProps) => {
+const Card = ({ title }: CardProps) => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     var sha1: any = require('sha1');
@@ -14,7 +11,7 @@ const Card = ({ title, goTo }: CardProps) => {
     const handleSubmitLogin = async(e: any) => {
         e.preventDefault();
 
-        if(name && password) {
+        if(name && password && name.trim().length != 0 && name != "null" && name != "undefined") {
             let hash: any = sha1(password)
             try {
                 let response = await fetch('http://localhost:3000/api/login', {
@@ -45,9 +42,10 @@ const Card = ({ title, goTo }: CardProps) => {
     }
 
     const handleSubmitRegistration = async (e: any) => {
+        console.log("Entro")
         e.preventDefault();
 
-        if (name && password) {
+        if (name && password && name.trim().length != 0 && name != "null" && name != "undefined") {
             let hash: any = sha1(password)
             try {
                 let response = await fetch('http://localhost:3000/api/insertNewUser', {
