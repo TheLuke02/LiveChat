@@ -51,3 +51,7 @@ body {
 .input {
   @apply placeholder:italic placeholder:text-slate-400 bg-slate-500 w-full border border-slate-300 rounded-md py-3 pl-9 shadow-sm focus:outline-none focus:border-violet-900 focus:ring-violet-900 focus:ring-1;
 }
+
+.NavInput {
+  @apply placeholder:italic placeholder:text-white placeholder:text-center text-white text-center bg-slate-800 w-full h-10 border-slate-800 border-b-violet-500 shadow border-2 focus:outline-none focus:border-b-white
+}

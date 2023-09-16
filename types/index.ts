@@ -22,6 +22,7 @@ export interface User {
 }
 
 export interface Result {
+    sessionClosed?: boolean
     acknowledged?: boolean;
     insertedId?: string;
     erroreCredenziali?: string;

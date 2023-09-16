@@ -6,6 +6,6 @@ export default withSessionRoute(logout);
 
 async function logout(req, res, session) {
     req.session.destroy();
-    res.json(true)
+    res.json({sessionClosed: true})
     
 }
