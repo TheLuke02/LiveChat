@@ -46,6 +46,7 @@ const Card = ({ title }: CardProps) => {
 
         if (name && password && name.trim().length != 0 && name != "null" && name != "undefined") {
             let hash: any = sha1(password)
+            setName(name.trim())
             try {
                 let response = await fetch('http://localhost:3000/api/insertNewUser', {
                     method: 'POST',
@@ -74,7 +75,7 @@ const Card = ({ title }: CardProps) => {
                 console.error(errorMessage);
             }
         } else {
-            return alert('Sono richiesti tutti i campi')
+            return alert('Gli spazi non sono consentiti, sono richiesti tutti i campi')
         }
     }   
 
