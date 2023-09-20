@@ -23,6 +23,6 @@ export default async (req, res) => {
             res.json({ erroreUtente: "Utente già registrato" })
         }
     } catch (e) {
-        console.error(e)
+        res.json(e)
     }
 }

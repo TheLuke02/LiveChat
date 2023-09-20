@@ -1,7 +1,6 @@
 import { Result } from '@/types'
 import { ArrowRightOnRectangleIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
-import React from 'react'
-import Button from './Button'
+import React, { useEffect, useState } from 'react'
 
 export async function logout() {
     const response = await fetch("http://localhost:3000/api/logout")
@@ -15,11 +14,48 @@ export async function logout() {
     }
 }
 
-export function searchUser() {
 
-}
+function NavBar ({setResult}: any) {
 
-const NavBar = () => {
+    const [search, setSearch] = useState("")
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        const searchUser = async () => {
+          const response = await fetch('http://localhost:3000/api/searchUser', {
+            method: 'POST',
+            body: JSON.stringify({
+                search: search
+            }),
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+          const data = await response.json();
+          setData(data);
+        };
+        searchUser();
+      }, []);
+
+      
+
+      useEffect(() => {
+        if (search != "") {
+          const results = data.filter((res: any) =>
+          res.name.toLowerCase().includes(search.toLowerCase())
+          );
+          setResult(results);
+        } else {
+            setResult([]);
+        }
+      }, [search, data]); 
+
+      const handleSearch = (event: any) => {
+        setSearch(event.target.value);
+      };  
+    
+
     return (
         <div className='w-full'>
             <nav className="bg-slate-800 shadow">
@@ -32,17 +68,18 @@ const NavBar = () => {
                     <div className=''>
                         <form
                             method='POST'
-                            onSubmit={searchUser}
                             className='flex flex-raw'
                         >
                             <div className='pr-3'>
-                                <input className='NavInput' placeholder='Cerca un utente'/>
+                                <input className='NavInput' placeholder='Cerca un utente' value={search} onChange={handleSearch} />
+                               
                             </div>
 
+                            
+                            
+
                             <div className='pt-1'>
-                                <button type='submit'>
-                                    <MagnifyingGlassIcon className='h-8 w-8 stroke-violet-500 ' />
-                                </button>
+                                <MagnifyingGlassIcon className='h-8 w-8 stroke-violet-500 ' />
                             </div>
                         </form>
                     </div>

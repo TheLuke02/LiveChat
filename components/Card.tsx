@@ -42,7 +42,6 @@ const Card = ({ title }: CardProps) => {
     }
 
     const handleSubmitRegistration = async (e: any) => {
-        console.log("Entro")
         e.preventDefault();
 
         if (name && password && name.trim().length != 0 && name != "null" && name != "undefined") {
@@ -66,6 +65,7 @@ const Card = ({ title }: CardProps) => {
                 if(data.acknowledged) {
                     window.location.replace("./newRegistration");
                 } else {
+                    console.log(data)
                     alert(JSON.stringify(data))
                 }
                 
@@ -76,8 +76,9 @@ const Card = ({ title }: CardProps) => {
         } else {
             return alert('Sono richiesti tutti i campi')
         }
-    }
+    }   
 
+    
     return (
         <div className='h-auto w-auto px-3 py-3 shadow-lg shadow-black rounded-xl bg-slate-800'>
             <form 

@@ -1,6 +1,6 @@
-import { NavBar } from '@/components';
+import { NavBar, SearchResult } from '@/components';
 import { withSessionSsr } from './lib/config/withSession';
-import React from 'react'
+import React, { useState } from 'react'
 
 export const getServerSideProps = withSessionSsr( // Controllo se la sessione è attiva
   async ({ req, res }: any) => {
@@ -18,14 +18,18 @@ export const getServerSideProps = withSessionSsr( // Controllo se la sessione è
 
 const chats = ({ user }: any) => {
   if (user.session) {
+
+    const [result, setResult] = useState([])
+
     return (
       <main className=''>
         <div>
-          <NavBar />
+          <NavBar setResult={setResult} />
+          <SearchResult result={result}/>
         </div>
 
         <div>
-          <h1 className='text-white'>Hello {user.username}</h1>
+          <h1 className='text-white'>Al momento sei loggato come: {user.username}</h1>
         </div>
       </main>
     )

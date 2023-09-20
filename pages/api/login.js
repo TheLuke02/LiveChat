@@ -24,7 +24,7 @@ async function createSessionRoute(req, res) {
             res.json({trovato: true})
         }
    } catch (e) {
-       console.error(e);
+       res.json(e);
    }
 }; 
 
