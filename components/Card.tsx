@@ -11,7 +11,7 @@ const Card = ({ title }: CardProps) => {
     const handleSubmitLogin = async(e: any) => {
         e.preventDefault();
 
-        if(name && password && name.trim().length != 0 && name != "null" && name != "undefined") {
+        if(name && password && name != "null" && name != "undefined") {
             let hash: any = sha1(password)
             try {
                 let response = await fetch('http://localhost:3000/api/login', {
