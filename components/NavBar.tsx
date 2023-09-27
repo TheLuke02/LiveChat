@@ -15,9 +15,7 @@ export async function logout() {
 }
 
 
-function NavBar ({setResult}: any) {
-
-    const [search, setSearch] = useState("")
+function NavBar ({setResult, search, setSearch}: any) {
     const [data, setData] = useState([])
 
     useEffect(() => {
@@ -72,11 +70,7 @@ function NavBar ({setResult}: any) {
                         >
                             <div className='pr-3'>
                                 <input className='NavInput' placeholder='Cerca un utente' value={search} onChange={handleSearch} />
-                               
                             </div>
-
-                            
-                            
 
                             <div className='pt-1'>
                                 <MagnifyingGlassIcon className='h-8 w-8 stroke-violet-500 ' />
