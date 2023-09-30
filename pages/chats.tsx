@@ -3,22 +3,22 @@ import { withSessionSsr } from './lib/config/withSession';
 import React, { useState } from 'react'
 
 export const getServerSideProps = withSessionSsr( // Controllo se la sessione è attiva
-  async ({ req, res }: any) => {
-    const user = req.session.user;
-    if (!user) {
-      return {
-        notFound: true,
-      }
-    }
-    return {
-      props: { user }
-    }
-  }
-);
+                    async ({ req, res }: any) => {
+                      const user = req.session.user;
+                      if (!user) {
+                        return {
+                          props: {notFound: true}
+                        }
+                      }
+
+                      return {
+                        props: {user}
+                      }
+                    });
+
 
 const chats = ({ user }: any) => {
   if (user.session) {
-
     const [result, setResult] = useState([])
     const [selectedUser, setSelectedUser] = useState('')
     const [search, setSearch] = useState("")
@@ -27,7 +27,7 @@ const chats = ({ user }: any) => {
       <main className=''>
         <div>
           <NavBar setResult={setResult} search={search} setSearch={setSearch} />
-          <SearchResult setSelectedUser={setSelectedUser} setResult={setResult} setSearch={setSearch} result={result}/>
+          <SearchResult setSelectedUser={setSelectedUser} setResult={setResult} setSearch={setSearch} result={result} />
         </div>
 
         <div>
@@ -37,6 +37,7 @@ const chats = ({ user }: any) => {
       </main>
     )
   } else {
+
     return (
       <div>
         Errore durante il login
