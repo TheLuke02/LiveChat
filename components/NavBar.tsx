@@ -15,7 +15,7 @@ export async function logout() {
 }
 
 
-function NavBar ({setResult, search, setSearch}: any) {
+function NavBar ({sessionUser, setSearchLoading, setResult, search, setSearch}: any) {
     const [data, setData] = useState([])
 
     useEffect(() => {
@@ -23,7 +23,8 @@ function NavBar ({setResult, search, setSearch}: any) {
           const response = await fetch('http://localhost:3000/api/searchUser', {
             method: 'POST',
             body: JSON.stringify({
-                search: search
+                search: search,
+                except: sessionUser
             }),
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -37,13 +38,13 @@ function NavBar ({setResult, search, setSearch}: any) {
       }, []);
 
       
-
       useEffect(() => {
         if (search != "") {
           const results = data.filter((res: any) =>
           res.name.toLowerCase().includes(search.toLowerCase())
           );
           setResult(results);
+          setSearchLoading(false)
         } else {
             setResult([]);
         }
