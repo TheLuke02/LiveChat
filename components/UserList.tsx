@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
-const UserList = ({ sessionUser, setSelectedChat, selectedUser, setSelectedUser}: any) => {
-
+const UserList = ({ sessionUser, setSelectedChat}: any) => {
   const [conversation, setConversation] = useState([])
   const [isLoading, setLoading] = useState(true)
-
+  
   useEffect(() => {
-    const searchConv = async () => {
+    async function searchConv() {
       const response = await fetch('http://localhost:3000/api/getConversation', {
         method: 'POST',
         body: JSON.stringify({
@@ -31,16 +30,10 @@ const UserList = ({ sessionUser, setSelectedChat, selectedUser, setSelectedUser}
       </div>
       {
         isLoading
-          ? <div className='text-center'>
+          ? <div className='py-3 text-center font-extrabold text-xl'>
               <span>Caricando le chat...</span>
-          </div>
-          : <div> {
-            selectedUser.erroreNuovaConversazione == false
-            ? <div key={selectedUser._id} onClick={() => setSelectedChat(selectedUser._id)} className='bg-slate-800 rounded-3xl py-5 px-5 my-1 mx-1 text-xl text-center text-white hover:cursor-pointer'>
-                <span>{selectedUser.name}</span>
-              </div>
-            : <></>
-          }
+            </div>
+          : <div> 
 
           {
             conversation.map((conv: any) => {
@@ -49,11 +42,12 @@ const UserList = ({ sessionUser, setSelectedChat, selectedUser, setSelectedUser}
                   {conv.users.map((user: any) => { return (user != sessionUser ? <span key={user}>{user}</span> : "") })}
                 </div>
               )
-            })}
+            })
+          }
           </div>
       }
     </div>
-  )
+  ) 
 }
 
 export default UserList

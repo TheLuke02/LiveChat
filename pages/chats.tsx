@@ -22,17 +22,15 @@ export const getServerSideProps = withSessionSsr( // Controllo se la sessione è
 const chats = ({ user }: any) => {
   if (user.session) {
     const [result, setResult] = useState([])
-    const [selectedUser, setSelectedUser] = useState({id: "", name: "", erroreNuovaConversazione: true})
+    const [selectedUser, setSelectedUser] = useState({_id: "", name: ""})
     const [search, setSearch] = useState("")
     const [selectedChat, setSelectedChat] = useState("")
-    const [searchLoading, setSearchLoading] = useState(true)
 
     return (
       <main className=''>
         <div>
           <NavBar 
             sessionUser={user.username}
-            setSearchLoading={setSearchLoading} 
             setResult={setResult} 
             search={search} 
             setSearch={setSearch} 
@@ -44,17 +42,14 @@ const chats = ({ user }: any) => {
             setResult={setResult} 
             setSearch={setSearch} 
             result={result} 
-            setSearchLoading={setSearchLoading} 
-            searchLoading={searchLoading} 
           />
         </div>
         <div className='grid grid-cols-12 grid-rows-6 divide-x-2 divide-black'>
           <div className='col-span-3'>
             <UserList 
+              key={selectedUser._id} // Ricarica UserList ogni volta che la key cambia
               sessionUser={user.username} 
               setSelectedChat={setSelectedChat} 
-              selectedUser={selectedUser} 
-              setSelectedUser={setSelectedUser} 
             />
           </div>
           <div className='col-span-9'>

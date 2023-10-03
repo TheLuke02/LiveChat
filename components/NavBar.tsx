@@ -15,7 +15,7 @@ export async function logout() {
 }
 
 
-function NavBar ({sessionUser, setSearchLoading, setResult, search, setSearch}: any) {
+function NavBar ({sessionUser, setResult, search, setSearch}: any) {
     const [data, setData] = useState([])
 
     useEffect(() => {
@@ -44,7 +44,6 @@ function NavBar ({sessionUser, setSearchLoading, setResult, search, setSearch}: 
           res.name.toLowerCase().includes(search.toLowerCase())
           );
           setResult(results);
-          setSearchLoading(false)
         } else {
             setResult([]);
         }

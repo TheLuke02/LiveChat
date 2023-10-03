@@ -18,7 +18,7 @@ export default async (req, res) => {
             
                 res.json(newConversation)
         } else {
-            res.json({ erroreNuovaConversazione: true })
+            res.json(false)
         }
         
     } catch (e) {

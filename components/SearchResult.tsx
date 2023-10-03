@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SearchResult = ({ sessionUser, setSelectedUser, setSearch, setResult, result, setSearchLoading, searchLoading }: any) => {
+const SearchResult = ({ sessionUser, setSelectedUser, setSearch, setResult, result}: any) => {
 
   const createNewConversation = async (name: any) => {
 
@@ -16,14 +16,14 @@ const SearchResult = ({ sessionUser, setSelectedUser, setSearch, setResult, resu
       }
     });
     const data = await response.json();
-    if(!data.erroreNuovaConversazione)
-      setSelectedUser({_id: data.insertedId, name: name, erroreNuovaConversazione: false})
-    else
-      setSelectedUser({erroreNuovaConversazione: true})
+    if(!data.flag) {
+      setSelectedUser({_id: data.insertedId, name: name})
+    } else {
+      setSelectedUser({errore: "Errore nella creazione della conversazione"})
+    }
     
     setResult([])
     setSearch('')
-    setSearchLoading(true)
   }
 
   return (
@@ -31,9 +31,6 @@ const SearchResult = ({ sessionUser, setSelectedUser, setSearch, setResult, resu
       <div className='absolute left-1/2 -translate-x-16'>
         <div className={`grid grid-cols-1 gap-2 bg-slate-800 rounded-b-lg w-auto divide-y-4 px-3 divide-violet-500 ${result.length != 0 ? 'pb-2' : ''}`}>
           {
-            searchLoading
-              ? <></>
-              :
               result.map((res: any) => {
                 return (
                   <div
