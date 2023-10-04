@@ -27,8 +27,8 @@ const chats = ({ user }: any) => {
     const [selectedChat, setSelectedChat] = useState("")
 
     return (
-      <main className=''>
-        <div>
+      <main className='h-screen'>
+        <div className='block'>
           <NavBar 
             sessionUser={user.username}
             setResult={setResult} 
@@ -44,18 +44,22 @@ const chats = ({ user }: any) => {
             result={result} 
           />
         </div>
-        <div className='grid grid-cols-12 grid-rows-6 divide-x-2 divide-black'>
-          <div className='col-span-3'>
+        <div className='flex flex-row space-x-4 h-[calc(100vh-84px)]'>
+          <div className='basis-1/6'>
             <UserList 
               key={selectedUser._id} // Ricarica UserList ogni volta che la key cambia
               sessionUser={user.username} 
               setSelectedChat={setSelectedChat} 
             />
           </div>
-          <div className='col-span-9'>
-            <ChatBox 
+          <div className='basis-5/6'>
+            { selectedChat && 
+              <ChatBox 
+              key={selectedUser._id}
+              sessionUser={user.username}
               selectedChat={selectedChat} 
             />
+            }
           </div>
         </div>
       </main>

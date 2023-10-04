@@ -24,7 +24,7 @@ const UserList = ({ sessionUser, setSelectedChat}: any) => {
   }, [])
   
   return (
-    <div className='bg-violet-700 grid grid-flow-row auto-rows-max'>
+    <div className='grid grid-row'>
       <div className=' font-extrabold text-slate-800 text-4xl font-gluten text-center pt-3'>
         Chats
       </div>
@@ -36,7 +36,13 @@ const UserList = ({ sessionUser, setSelectedChat}: any) => {
           : <div> 
 
           {
-            conversation.map((conv: any) => {
+            conversation.length == 0
+            ? <div className='px-2 py-2 mx-1 my-1'>
+                <h1 className='text-center text-2xl font-extrabold text-slate-800'>
+                  Non hai avviato nessuna chat
+                </h1>
+              </div>
+            :conversation.map((conv: any) => {
               return (
                 <div key={conv._id} onClick={() => setSelectedChat(conv._id)} className='bg-slate-800 rounded-3xl py-5 px-5 my-1 mx-1 text-xl text-center text-white hover:cursor-pointer'>
                   {conv.users.map((user: any) => { return (user != sessionUser ? <span key={user}>{user}</span> : "") })}

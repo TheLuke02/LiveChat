@@ -13,10 +13,7 @@
 
 html {
    margin: 0; padding: 0; height: 100%; width: 100%;
-}
-
-body {
-  @apply bg-gradient-to-b from-indigo-500 to-violet-500; 
+   @apply bg-gradient-to-b from-indigo-500 to-violet-500;
 }
 
 /* START: General styles */
@@ -53,5 +50,9 @@ body {
 }
 
 .NavInput {
-  @apply placeholder:italic placeholder:text-white placeholder:text-center text-white text-center bg-slate-800 w-full h-10 border-slate-800 border-b-violet-500 shadow border-2 focus:outline-none focus:border-b-white
+  @apply placeholder:italic placeholder:text-white placeholder:text-center text-white text-center bg-slate-800 w-full h-10 border-slate-800 border-b-violet-500 shadow border-2 focus:outline-none focus:border-b-white;
+}
+
+.ChatInput {
+  @apply pl-5 placeholder:italic placeholder:text-slate-500 bg-slate-800 w-full h-14 border-slate-500 shadow border-2 focus:outline-none focus:border-gray-300 text-white text-lg font-semibold rounded-full;
 }
