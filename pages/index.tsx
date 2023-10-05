@@ -23,7 +23,11 @@ export default function Home() {
             goTo='./api/login'
           />
         </div>
-
+      </div>
+      <div className='py-5 my-5 font-extrabold text-slate-800 text-4xl font-gluten text-center'>
+        l'unica cosa criptata all'interno di questo sito saranno le vostre password, <br />
+        tutti i messaggi che manderete tramite questa WEB-APP saranno salvati in chiaro. <br />
+        Siete stati avvisati
       </div>
     </main>
   )
